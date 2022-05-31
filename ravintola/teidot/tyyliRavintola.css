@@ -1,0 +1,140 @@
+h1 { font-size: 150px; font-family: initial;color: rgb(0, 0, 0);font: size 500%; }
+h6 { color: darkblue;font-family: inherit; text-align: center;}
+p {color: rgb(0, 17, 255); font-family: 
+'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+text-align: center;}
+h4 { color: lightblue;font-family: serif;text-align: center;}
+
+.item1 { grid-area: header; }
+.item2 { grid-area: menu; }
+.item3 { grid-area: main; }
+.item4 { grid-area: right; }
+.item5 { grid-area: footer; }
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header'
+    'menu main main main right right'
+    'menu footer footer footer footer footer';
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgb(110, 0, 0);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+body {
+  background-color: lightblue;
+}
+
+@media screen and (min-width: 400px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  body {
+    background-color: lavender;
+  }
+}
+    @media screen and (max-width: 960px){
+      body {
+        display: grid;
+        grid-template-areas:
+          'header header header header header header'
+          'aside nav nav nav nav nav'
+          'aside article article article section section'
+          'footer footer footer footer footer footer';
+        grid-gap: 10px;
+        background-color: peru;
+        padding: 10px;
+        font-size: 16px;
+      }
+    }
+    
+    @media screen and (max-width: 480px){
+      body {
+        display: flex;
+        flex-direction: column;
+        background-color: #3196F3;
+        padding: 3px;
+        font-size: 10px;
+        }
+    
+      aside {
+        display: none;
+      }
+    }
+    
+    @media screen and (max-width: 320px){
+      body {
+        width: 320px;
+      }
+    }
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Create four equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 25%;
+      padding: 20px;
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    
+    /* On screens that are 992px wide or less, go from four columns to two columns */
+    @media screen and (max-width: 992px) {
+      .column {
+        width: 50%;
+      }
+    }
+    
+    /* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+      }
+    }
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Create four equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 25%;
+      padding: 20px;
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    
+    /* On screens that are 992px wide or less, go from four columns to two columns */
+    @media screen and (max-width: 992px) {
+      .column {
+        width: 50%;
+      }
+    }
+    
+    /* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+      }
+    }
