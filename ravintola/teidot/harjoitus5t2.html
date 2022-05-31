@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>harjoitus5-tehtävä2</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="tyyliRavintola.css"> 
+</head>
+<body> 
+
+
+<div class="grid-container">
+  <div class="item1"><h1>Ravintola</h1></div>
+  <div class="item2"><h4>Yhteystiedot ja aukioloajat:</h4>
+      <p>Ravintola Lapintaika, Ravintolakatu 2, 98765 LAPINMAA</p>
+      <p>Puh. (012) 345 6789 Sähköposti: varaukset@jokuposti.net
+      aukioloajat: ma - pe, 10:30 - 15:00 </p>
+      <p>la-sun suljettu</p>
+</div>
+  <div class="item3"><p>Ruokalista:</p><p>Maanantai</p>
+    <p>Juusto-vihanneskeittoa ja kokin sämpylä Paistettua lohta, sinappikastiketta, tilliperunoita ja kasviksia Marjakiisseliä ja hunajakermavaahtoa</p>
+    <p>Tiistai</p>
+    <p>Kana-fetajustosalaattia ja kokin sämpylä Paistettua punakampelaa, pinaattikastiketta ja perunamuusia Pannukakkua, mansikkahilloa ja kermavaahtoa</p>
+    <p>Keskiviikko</p>
+    <p>Tomaatti-yrttikeittoa ja kokin sämpylä Kalkkunaleikettä, BBQ-kastiketta, riisiä ja kasviksia Omenapiirakkaa ja vaniljakastiketta</p>
+    <p>Torstai</p>
+    <p>Rapukeittoa ja kokin sämpylä Poronkäristystä, perunamuusia, puolukkahilloa ja suolakurkkuja Hedelmäsalaattia ja kinuskikastiketta</p>
+    <p>Perjantai</p>
+    <p>Savulohisalaatti ja kokin sämpylä Naudan paahtopaistia, punaviinikastiketta, kermaperunat ja kasviksia Suklaamousse</p>
+  </div>  
+  <div class="item4">Lounaan hinta (11 euroa, sisältäen ruokajuoman: vesi, kotikalja, maito)</div>
+  <div class="item5"><img src="kuvat/kattaus.jpg">
+    <h2>lomake</h2>
+    <table style="width:100%">
+      <tr>
+        <td>
+          <p>Nimi: <input type="text" name="name" maxlength=30></td>
+      </tr>
+      <td>  
+          <p>Ikä: <input type="number" name="age"></p>
+      </tr>
+      <td>
+        <p>sukupuoli</p>
+          <input type="radio" name="gender" value="man">Mies<br>
+          <input type="radio" name="gender" value="female">Nainen<br>
+          <input type="radio" name="gender" value="other" >Muu<br></p> 
+      </tr>
+      <td>
+        <p>tähti arvonta</p>
+        <select name="tähti arvostelu">
+        <option value="android">viisi</option>
+        <option value="iphone">neljä</option>
+        <option value="ipad">kolme</option>
+        <option value="other">kaksi</option>
+        <option value="other">yksi</option>
+  </select> 
+      </tr>
+      <td>
+        <h6>Tähän voi kirjoittaa palautteen ravintolasta (ei pakollinen)</h6>
+      <textarea name="message" rows="8" cols="30">
+        </textarea>
+        <form method="post" action="login.php" name="kirjautuminen">
+          <script>
+            const lomake = function() 
+            {
+              alert('lomake on lähetetty');
+            }
+            </script> 
+      </tr>
+
+    </table>
+     <button onClick="lomake()">lähetä lomake</button>      
+</div>
+</head>  
+</body>
