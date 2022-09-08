@@ -887,7 +887,7 @@ section {
 --------------------------------------------------------------*/
 .breadcrumbs {
   padding: 20px 0;
-  background: #f9f9f9;
+  background: #ff0000;
 }
 .breadcrumbs h2 {
   font-size: 26px;
@@ -934,7 +934,7 @@ section {
   bottom: 0;
   width: 300px;
   z-index: 9999;
-  background: #040b14;
+  background: #ff0000;
 }
 #footer .copyright {
   text-align: center;
