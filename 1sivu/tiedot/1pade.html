@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+  <header>
+    <div class="container top">
+      <div class="brand">Store Goods — Demo</div>
+      <div class="controls">
+        <input id="search" type="search" placeholder="Search products, e.g. 'sneakers'" aria-label="Search products" />
+        <select id="sort" title="Sort products">
+          <option value="relevance">Sort: Relevance</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="name-asc">Name: A → Z</option>
+        </select>
+        <button id="exportJson" class="chip" title="Download displayed products as JSON">Export JSON</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div id="categories" aria-label="Categories" role="toolbar"></div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <div class="summary" id="summary"></div>
+      </div>
+    </div>
+
+    <section id="productGrid" class="grid" aria-live="polite"></section>
+
+    <div class="pager" id="pager"></div>
+  </main>
+
+  <footer class="site-footer">
+    <a href="2pade.html" rel="noopener">about us</a>
+  </footer>
+
+  <script>
+    const GOODS = [
+      {id:1,name:'Classic lipstick',price:69.99,category:'Lipstick',stock:12,desc:'Classic lipstick in good price'},
+      {id:2,name:'Travel Backpack 28L',price:89.50,category:'Bags',stock:5,desc:'Water-resistant travel backpack wiht store logo.'},
+      {id:3,name:'Stainless Water Bottle 750ml',price:19.9,category:'Accessories',stock:40,desc:'Keeps drinks cold for 24h wiht store logo.'},
+      {id:4,name:'Noise-Cancelling Headphones',price:149.99,category:'Electronics',stock:8,desc:'Wireless headphones with long battery.'},
+      {id:5,name:'Organic Cotton T-shirt',price:24.99,category:'Apparel',stock:30,desc:'Soft, eco-friendly tee.'},
+      {id:6,name:'Running Shorts',price:29.99,category:'Apparel',stock:20,desc:'Lightweight and breathable.'},
+      {id:7,name:'Desk Lamp LED',price:34.0,category:'Home',stock:15,desc:'Adjustable brightness lamp.'},
+      {id:8,name:'Ceramic Mug 350ml',price:12.5,category:'Home',stock:70,desc:'Dishwasher-safe mug.'},
+      {id:9,name:'Bluetooth Speaker Mini',price:39.99,category:'Electronics',stock:18,desc:'Portable speaker with big sound.'},
+      {id:10,name:'Leather Wallet',price:45.0,category:'Accessories',stock:10,desc:'Slim bi-fold wallet.'},
+      {id:11,name:'Hiking Socks (3-pack)',price:15.0,category:'Lipstick',stock:100,desc:'Cushioned hiking socks.'},
+      {id:12,name:'Sunscreen SPF 50',price:9.99,category:'Health',stock:60,desc:'Broad-spectrum sunscreen.'}
+    ];
+
+    function svgPlaceholder(text){
+      const w=400,h=300,bg='#f3f4f6',fg='#9ca3af';
+      return `data:image/svg+xml;utf8,`+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'><rect width='100%' height='100%' fill='${bg}' /><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='${fg}' font-family='Arial, sans-serif' font-size='22'>${text}</text></svg>`);
+    }
+
+    const state={data:GOODS.slice(),query:'',category:'All',sort:'relevance',page:1,perPage:8};
+    const categories=['All',...Array.from(new Set(GOODS.map(g=>g.category))).sort()];
+    const grid=document.getElementById('productGrid');
+    const categoriesEl=document.getElementById('categories');
+    const searchEl=document.getElementById('search');
+    const sortEl=document.getElementById('sort');
+    const pagerEl=document.getElementById('pager');
+    const summaryEl=document.getElementById('summary');
+    const exportJsonBtn=document.getElementById('exportJson');
+
+    function renderCategories(){
+      categoriesEl.innerHTML='';
+      categories.forEach(cat=>{
+        const btn=document.createElement('button');
+        btn.className='chip'+(state.category===cat?' active':'');
+        btn.textContent=cat;
+        btn.onclick=()=>{state.category=cat;state.page=1;render();};
+        categoriesEl.appendChild(btn);
+      });
+    }
+
+    function filterAndSort(){
+      let out=state.data.slice();
+      if(state.category!=='All') out=out.filter(p=>p.category===state.category);
+      if(state.query.trim()){
+        const q=state.query.trim().toLowerCase();
+        out=out.filter(p=>(p.name+' '+(p.desc||'')+' '+p.category).toLowerCase().includes(q));
+      }
+      switch(state.sort){
+        case 'price-asc': out.sort((a,b)=>a.price-b.price); break;
+        case 'price-desc': out.sort((a,b)=>b.price-a.price); break;
+        case 'name-asc': out.sort((a,b)=>a.name.localeCompare(b.name)); break;
+      }
+      return out;
+    }
+
+    function render(){
+      renderCategories();
+      const items=filterAndSort();
+      const total=items.length;
+      const totalPages=Math.max(1,Math.ceil(total/state.perPage));
+      if(state.page>totalPages) state.page=totalPages;
+      const start=(state.page-1)*state.perPage;
+      const pageItems=items.slice(start,start+state.perPage);
+
+      grid.innerHTML='';
+      pageItems.forEach(p=>{
+        const card=document.createElement('article');
+        card.className='card';
+        const media=document.createElement('div'); media.className='media';
+        const img=document.createElement('img'); img.alt=p.name; img.src=svgPlaceholder(p.name); media.appendChild(img);
+        const title=document.createElement('div'); title.className='title'; title.textContent=p.name;
+        const desc=document.createElement('div'); desc.style.fontSize='13px'; desc.style.color='var(--muted)'; desc.textContent=p.desc||'';
+        const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML=`<div class='price'>€${p.price.toFixed(2)}</div><div>${p.category} • ${p.stock} in stock</div>`;
+        const actions=document.createElement('div'); actions.className='actions';
+        const add=document.createElement('button'); add.className='btn'; add.textContent='Add to cart'; add.onclick=()=>alert(`${p.name} added to cart (demo).`);
+        const view=document.createElement('button'); view.className='ghost'; view.textContent='View'; view.onclick=()=>alert(`${p.name}\n\nPrice: €${p.price.toFixed(2)}\nCategory: ${p.category}\nStock: ${p.stock}\n\n${p.desc||''}`);
+        actions.appendChild(add); actions.appendChild(view);
+        card.appendChild(media); card.appendChild(title); card.appendChild(desc); card.appendChild(meta); card.appendChild(actions);
+        grid.appendChild(card);
+      });
+
+      pagerEl.innerHTML='';
+      const prev=document.createElement('button'); prev.textContent='← Prev'; prev.disabled=state.page===1; prev.onclick=()=>{state.page--;render();};
+      const next=document.createElement('button'); next.textContent='Next →'; next.disabled=state.page===totalPages; next.onclick=()=>{state.page++;render();};
+      pagerEl.appendChild(prev);
+      const pageInfo=document.createElement('div'); pageInfo.style.padding='6px 10px'; pageInfo.style.borderRadius='8px'; pageInfo.style.background='white'; pageInfo.textContent=`Page ${state.page} / ${totalPages}`;
+      pagerEl.appendChild(pageInfo);
+      pagerEl.appendChild(next);
+      summaryEl.textContent=`${total} product${total!==1?'s':''} — showing ${pageItems.length}`;
+    }
+
+    searchEl.addEventListener('input',e=>{state.query=e.target.value;state.page=1;render();});
+    sortEl.addEventListener('change',e=>{state.sort=e.target.value;render();});
+    exportJsonBtn.addEventListener('click',()=>{
+      const items=filterAndSort();
+      const blob=new Blob([JSON.stringify(items,null,2)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download='products.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+    render();
+  </script>
+</body>
+</html>
