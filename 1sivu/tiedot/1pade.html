@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="stylesheet" href="style.css"> 
+  <title>Store Goods — Demo</title>
+  <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
   <header>
     <div class="container top">
-      <div class="brand">Store Goods — Demo</div>
+      <div class="brand">Acme Store — All Goods</div>
       <div class="controls">
         <input id="search" type="search" placeholder="Search products, e.g. 'sneakers'" aria-label="Search products" />
         <select id="sort" title="Sort products">
@@ -35,15 +36,15 @@
     <div class="pager" id="pager"></div>
   </main>
 
-  <footer class="site-footer">
-    <a href="2pade.html" rel="noopener">about us</a>
+  <footer class="site-footer" style="text-align: center;">
+    Visit our main store site: <a href="2pade.html" target="_blank" rel="noopener">more of us</a>
   </footer>
 
   <script>
     const GOODS = [
-      {id:1,name:'Classic lipstick',price:69.99,category:'Lipstick',stock:12,desc:'Classic lipstick in good price'},
-      {id:2,name:'Travel Backpack 28L',price:89.50,category:'Bags',stock:5,desc:'Water-resistant travel backpack wiht store logo.'},
-      {id:3,name:'Stainless Water Bottle 750ml',price:19.9,category:'Accessories',stock:40,desc:'Keeps drinks cold for 24h wiht store logo.'},
+      {id:1,name:'Classic White Sneakers',price:69.99,category:'Footwear',stock:12,desc:'Comfortable everyday sneakers.'},
+      {id:2,name:'Travel Backpack 28L',price:89.50,category:'Bags',stock:5,desc:'Water-resistant travel backpack.'},
+      {id:3,name:'Stainless Water Bottle 750ml',price:19.9,category:'Accessories',stock:40,desc:'Keeps drinks cold for 24h.'},
       {id:4,name:'Noise-Cancelling Headphones',price:149.99,category:'Electronics',stock:8,desc:'Wireless headphones with long battery.'},
       {id:5,name:'Organic Cotton T-shirt',price:24.99,category:'Apparel',stock:30,desc:'Soft, eco-friendly tee.'},
       {id:6,name:'Running Shorts',price:29.99,category:'Apparel',stock:20,desc:'Lightweight and breathable.'},
@@ -51,7 +52,7 @@
       {id:8,name:'Ceramic Mug 350ml',price:12.5,category:'Home',stock:70,desc:'Dishwasher-safe mug.'},
       {id:9,name:'Bluetooth Speaker Mini',price:39.99,category:'Electronics',stock:18,desc:'Portable speaker with big sound.'},
       {id:10,name:'Leather Wallet',price:45.0,category:'Accessories',stock:10,desc:'Slim bi-fold wallet.'},
-      {id:11,name:'Hiking Socks (3-pack)',price:15.0,category:'Lipstick',stock:100,desc:'Cushioned hiking socks.'},
+      {id:11,name:'Hiking Socks (3-pack)',price:15.0,category:'Footwear',stock:100,desc:'Cushioned hiking socks.'},
       {id:12,name:'Sunscreen SPF 50',price:9.99,category:'Health',stock:60,desc:'Broad-spectrum sunscreen.'}
     ];
 
